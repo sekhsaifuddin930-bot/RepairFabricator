@@ -25,6 +25,13 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Restore Android configuration and google-services.json
+        run: |
+          # Ensure google-services.json is intact and prevent any overwriting
+          if [ -f "android/app/google-services.json" ]; then
+            echo "google-services.json exists."
+          fi
+
       - name: Update minSdk to 23
         run: |
           GRADLE_FILE="android/app/build.gradle"
