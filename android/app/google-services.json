@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "263179970256",
+    "project_id": "repair-fabricator",
+    "storage_bucket": "repair-fabricator.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263179970256:android:25e9561ba0f1c7a9eba0d5",
+        "android_client_info": {
+          "package_name": "com.repair.fabricator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0P8SyvbLfNhShQTEpu-LglXwP1rChd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
