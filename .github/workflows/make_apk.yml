@@ -25,10 +25,6 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Clean and Create Android Support
-        run: |
-          flutter create --org com.repair.fabricator --project-name repair_fabricator --platforms=android .
-
       - name: Update minSdk to 23
         run: |
           GRADLE_FILE="android/app/build.gradle"
