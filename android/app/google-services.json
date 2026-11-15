@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "263179970256",
     "project_id": "repair-fabricator",
-    "storage_bucket": "repair-fabricator.appspot.com"
+    "storage_bucket": "repair-fabricator.firebasestorage.app"
   },
   "client": [
     {
@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "263179970256-9iBn2oakdtfnjkike9aod5fr10dh98mv.apps.googleusercontent.com",
+          "client_id": "263179970256-9ibn2oakdtfnjkik69aod5fr108h9mv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.repair.fabricator",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "263179970256-jvkH47v82j5VbI5urhIlnsqqeaa4ce2l.apps.googleusercontent.com",
+          "client_id": "263179970256-jvkh47v82j5vb1surl1lnsqqeaa4ce21.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB0Pb5yvbLFNuShQTepu-Lg1XwPR1cHd4"
+          "current_key": "AIzaSyB0Pb5yVbIfNHu5hQTEpu-LgLxwpR1Chd4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "263179970256-jvkH47v82j5VbI5urhIlnsqqeaa4ce2l.apps.googleusercontent.com",
+              "client_id": "263179970256-jvkh47v82j5vb1surl1lnsqqeaa4ce21.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
