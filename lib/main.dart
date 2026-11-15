@@ -14,6 +14,7 @@ void main() async {
 
   runApp(const RepairFabricatorApp());
 }
+
 class RepairFabricatorApp extends StatelessWidget {
   const RepairFabricatorApp({super.key});
 
@@ -46,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
   int _timerSeconds = 60;
   Timer? _timer;
   String _verificationId = '';
-    void _startTimer() {
+
+  void _startTimer() {
     setState(() {
       _timerSeconds = 60;
       _isLoading = true;
@@ -80,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _otpController.dispose();
     super.dispose();
   }
-    Future<void> _sendRealOtp() async {
+
+  Future<void> _sendRealOtp() async {
     if (_nameController.text.isEmpty ||
         _phoneController.text.length != 10 ||
         !_emailController.text.contains('@')) {
@@ -142,8 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text('Error: $e')),
       );
     }
-    }
-    Future<void> _verifyRealOtp() async {
+  }
+
+  Future<void> _verifyRealOtp() async {
     if (_otpController.text.trim().length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a valid 6-digit OTP')),
@@ -192,7 +196,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _verifyRealOtp();
     }
   }
-    @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Repair Fabricator'), centerTitle: true),
@@ -275,6 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
 class ProfileHomeScreen extends StatelessWidget {
   final String name;
   final String phone;
@@ -312,3 +318,4 @@ class ProfileHomeScreen extends StatelessWidget {
     );
   }
 }
+
