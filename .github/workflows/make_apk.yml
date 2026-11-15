@@ -15,7 +15,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: '17'
 
       - name: Set up Flutter
@@ -38,6 +38,9 @@ jobs:
             sed -i 's/minSdkVersion 16/minSdkVersion 23/g' $GRADLE_FILE
             sed -i 's/minSdkVersion 19/minSdkVersion 23/g' $GRADLE_FILE
           fi
+
+      - name: Clean project cache
+        run: flutter clean
 
       - name: Install dependencies
         run: flutter pub get
