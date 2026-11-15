@@ -1,29 +1,3 @@
-  void _startTimer() {
-    setState(() {
-      _timerSeconds = 60;
-      _isLoading = true;
-    });
-
-    _timer?.cancel(); // আগের কোনো টাইমার চালু থাকলে তা বন্ধ করে নিন
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        timer.cancel();
-        return;
-      }
-      
-      if (_timerSeconds > 0) {
-        setState(() {
-          _timerSeconds--;
-        });
-      } else {
-        timer.cancel();
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    });
-  }
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
@@ -103,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-    Future<void> _sendRealOtp() async {
+  Future<void> _sendRealOtp() async {
     if (_nameController.text.isEmpty ||
         _phoneController.text.length != 10 ||
         !_emailController.text.contains('@')) {
@@ -213,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Repair Fabricator'), centerTitle: true),
