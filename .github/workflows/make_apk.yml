@@ -25,9 +25,9 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Fix Android Embedding V2
+      - name: Fix Android Embedding V2 and Match Package Name
         run: |
-          flutter create --org com.repair.fabricator --project-name repair_fabricator --platforms=android .
+          flutter create --org com.repair --project-name fabricator --platforms=android .
 
       - name: Ensure google-services.json is in android/app
         run: |
