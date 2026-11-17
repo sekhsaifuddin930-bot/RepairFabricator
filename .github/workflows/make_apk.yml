@@ -27,7 +27,6 @@ jobs:
 
       - name: Fix Android Embedding V2 and keep google-services.json
         run: |
-          # Safely generate platform files to upgrade to Android Embedding V2 without losing existing files
           flutter create --org com.repair.fabricator --project-name repair_fabricator --platforms=android .
 
       - name: Update minSdk to 23
