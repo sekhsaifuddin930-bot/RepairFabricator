@@ -25,7 +25,7 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Fix Android Embedding V2 and Match Package Name
+      - name: Match Exact Package Name com.repair.fabricator
         run: |
           flutter create --org com.repair --project-name fabricator --platforms=android .
 
