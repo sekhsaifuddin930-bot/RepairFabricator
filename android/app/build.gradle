@@ -1,1 +1,1 @@
- final List<String> officialLanguages = const [ ... ];
+apply plugin: 'com.google.gms.google-services'
