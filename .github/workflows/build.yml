@@ -26,10 +26,13 @@ jobs:
     - name: Check Flutter Version & Doctor
       run: flutter --version
 
-    - name: Clean and Get Dependencies
+    - name: Get Dependencies
+      run: flutter pub get
+
+    - name: Fix Android V2 Embedding and Package Name
       run: |
-        flutter clean
-        flutter pub get
+        rm -rf android
+        flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
     - name: Build APK Release
       run: flutter build apk --release
