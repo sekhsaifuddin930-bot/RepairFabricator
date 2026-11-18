@@ -1,11 +1,13 @@
 // =====================================================================
 // REPAIR FABRICATOR: ALL-INDIA MUTUAL ENTERPRISE PRO APPLICATION
 // DIRECTOR & FOUNDER: Saifuddin Sekh
-// COMPLETE FEATURE SUITE: Camera Verification, Weight Calculator & Payouts
 // =====================================================================
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const RepairFabricatorEnterpriseApp());
 }
 
@@ -304,31 +306,6 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
                 side: const BorderSide(color: Color(0xFF00E5FF), width: 1.5),
               ),
             ),
-            const SizedBox(height: 15),
-            ElevatedButton.icon(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const WelderPortalModule())),
-              icon: const Icon(Icons.build, color: Color(0xFFD500F9)),
-              label: const Text('OFFER SKILLS? ➔ Join as Welder\n(Welding Types, Bidding & Secure Payouts)', style: TextStyle(fontSize: 12, color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2A1B4E),
-                padding: const EdgeInsets.all(18),
-                side: const BorderSide(color: Color(0xFFD500F9), width: 1.5),
-              ),
-            ),
-            const SizedBox(height: 15),
-            ElevatedButton.icon(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const RealTimeMapTrackingScreen())),
-              icon: const Icon(Icons.map, color: Colors.greenAccent),
-              label: const Text('Live GPS Map Tracking & Location Sharing', style: TextStyle(fontSize: 12, color: Colors.white)),
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF131B2E), padding: const EdgeInsets.all(16)),
-            ),
-            const SizedBox(height: 15),
-            ElevatedButton.icon(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const EnterpriseHubScreen())),
-              icon: const Icon(Icons.gavel, color: Colors.amberAccent),
-              label: const Text('Enterprise Hub: 1-Month Warranty & Digital Invoice', style: TextStyle(fontSize: 12, color: Colors.white)),
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF131B2E), padding: const EdgeInsets.all(16)),
-            ),
           ],
         ),
       ),
@@ -389,51 +366,9 @@ class _StructuralProjectInputScreenState extends State<StructuralProjectInputScr
                 side: BorderSide(color: _imageUploaded ? Colors.greenAccent : const Color(0xFF00E5FF)),
               ),
             ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _lengthController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Length (meters)', filled: true, fillColor: const Color(0xFF131B2E), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _heightController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Height (meters)', filled: true, fillColor: const Color(0xFF131B2E), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _widthController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Width (Optional)', filled: true, fillColor: const Color(0xFF131B2E), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _detailsController,
-              maxLines: 3,
-              decoration: InputDecoration(labelText: 'Project Notes & Material Requirements', filled: true, fillColor: const Color(0xFF131B2E), border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const WeightCalculatorScreen()));
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF00E5FF), padding: const EdgeInsets.symmetric(vertical: 16)),
-              child: const Text('Proceed to Weight & Cost Estimator ➔', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black)),
-            ),
           ],
         ),
       ),
     );
   }
-}
-
-// ---------------------------------------------------------------------
-// 6. METAL WEIGHT & COST CALCULATOR SCREEN (COMPLETED)
-// ---------------------------------------------------------------------
-class WeightCalculatorScreen extends StatefulWidget {
-  const WeightCalculatorScreen({Key? key}) : super(key: key);
-
-  @override
-  _WeightCalculatorScreenState createState() => _WeightCalculatorScreenState();
 }
