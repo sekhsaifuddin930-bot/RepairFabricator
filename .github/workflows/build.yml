@@ -29,6 +29,11 @@ jobs:
     - name: Get Dependencies
       run: flutter pub get
 
+    - name: Recreate Android V2 Embedding & Clean Structure
+      run: |
+        rm -rf android
+        flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
+
     - name: Force MinSdkVersion to 23 in Gradle File
       run: |
         BUILD_GRADLE="android/app/build.gradle"
