@@ -30,20 +30,25 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
-      - name: Force MinSdkVersion to 23 via Python
+      - name: Force MinSdkVersion to 23 correctly via Python
         run: |
           python3 -c '
-          import re
           path = "android/app/build.gradle"
           with open(path, "r") as f:
               content = f.read()
           
-          # Replace any form of minSdkVersion with 23
-          new_content = re.sub(r"minSdkVersion\s+.*", "minSdkVersion 23", content)
-          
+          # Replace inside defaultConfig block safely
+          if "minSdkVersion" in content:
+              import re
+              # Replace any existing minSdkVersion line with 23
+              new_content = re.sub(r"minSdkVersion\s+.*", "minSdkVersion 23", content)
+          else:
+              # Inject inside defaultConfig if missing
+              new_content = content.replace("defaultConfig {", "defaultConfig {\n        minSdkVersion 23")
+              
           with open(path, "w") as f:
               f.write(new_content)
-          print("Successfully forced minSdkVersion to 23 in build.gradle")
+          print("Successfully updated minSdkVersion to 23 inside defaultConfig")
           '
 
       - name: Install dependencies
