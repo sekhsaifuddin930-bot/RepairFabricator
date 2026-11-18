@@ -8,7 +8,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint("Firebase initialization error: $e");
+  }
+
   runApp(const RepairFabricatorEnterpriseApp());
 }
 
@@ -29,6 +35,7 @@ class RepairFabricatorEnterpriseApp extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 1. ALL-INDIA MULTI-LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
@@ -54,7 +61,7 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
         title: const Text('Repair Fabricator - Select Language', style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16)),
         backgroundColor: const Color(0xFF131B2E),
       ),
-            body: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,6 +102,7 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
 // ---------------------------------------------------------------------
@@ -120,7 +128,8 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
       MaterialPageRoute(builder: (context) => const SecureOnboardingScreen()),
     );
   }
-    @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -194,6 +203,7 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 3. SECURE ONBOARDING SCREEN
 // ---------------------------------------------------------------------
@@ -307,9 +317,10 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN
-// ---------------------------------------------------------------------
+-- ---------------------------------------------------------------------
 class StructuralProjectInputScreen extends StatefulWidget {
   const StructuralProjectInputScreen({Key? key}) : super(key: key);
 
