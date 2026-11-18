@@ -29,8 +29,9 @@ jobs:
     - name: Get Dependencies
       run: flutter pub get
 
-    - name: Recreate Android Project with V2 Embedding
+    - name: Clean Old Android and Force Recreate Fresh V2 Project
       run: |
+        rm -rf android
         flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
     - name: Build APK Release
