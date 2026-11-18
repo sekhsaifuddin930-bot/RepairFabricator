@@ -1,4 +1,4 @@
-name: Build Flutter APK
+name: Build Android APK
 
 on:
   push:
@@ -9,54 +9,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.22.0'
-        channel: 'stable'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+          channel: 'stable'
+          cache: true
 
-    - name: Check Flutter Version & Doctor
-      run: flutter --version
+      - name: Update minSdk to 23
+        run: |
+          GRADLE_FILE="android/app/build.gradle"
+          if [ -f "$GRADLE_FILE" ]; then
+            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/g' $GRADLE_FILE
+            sed -i 's/minSdkVersion 16/minSdkVersion 23/g' $GRADLE_FILE
+            sed -i 's/minSdkVersion 19/minSdkVersion 23/g' $GRADLE_FILE
+            sed -i 's/minSdkVersion 21/minSdkVersion 23/g' $GRADLE_FILE
+            echo "minSdkVersion successfully updated to 23"
+          else
+            echo "Gradle file not found!"
+          fi
 
-    - name: Get Dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Recreate Android V2 Embedding
-      run: |
-        rm -rf android
-        flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
+      - name: Build APK
+        run: flutter build apk --release
 
-    - name: Force MinSdkVersion to 23 via Python
-      run: |
-        python3 -c '
-        path = "android/app/build.gradle"
-        with open(path, "r") as f:
-            content = f.read()
-        # Replace minSdkVersion safely
-        new_content = content.replace("minSdkVersion flutter.minSdkVersion", "minSdkVersion 23")
-        new_content = new_content.replace("minSdkVersion 21", "minSdkVersion 23")
-        if "minSdkVersion 23" not in new_content:
-            # If not replaced, inject it inside defaultConfig
-            new_content = new_content.replace("defaultConfig {", "defaultConfig {\n        minSdkVersion 23")
-        with open(path, "w") as f:
-            f.write(new_content)
-        print("Successfully forced minSdkVersion to 23")
-        '
-
-    - name: Build APK Release
-      run: flutter build apk --release --no-pub
-
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
-        
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RepairFabricator-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+          
