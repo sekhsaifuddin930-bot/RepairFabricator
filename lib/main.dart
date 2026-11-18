@@ -29,23 +29,22 @@ class RepairFabricatorEnterpriseApp extends StatelessWidget {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 1. ALL-INDIA MULTI-LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
 class AllIndiaLanguageSelectionScreen extends StatelessWidget {
   const AllIndiaLanguageSelectionScreen({Key? key}) : super(key: key);
 
-  final List> officialLanguages = const [
-    {'name': 'English', 'native': 'English (Global)'},
-    {'name': 'Hindi', 'native': 'हिन्दी (Hindi - National)'},
-    {'name': 'Bengali', 'native': 'বাংলা (Bengali - West Bengal / Nadia)'},
-    {'name': 'Tamil', 'native': 'தமிழ் (Tamil)'},
-    {'name': 'Telugu', 'native': 'తెలుగు (Telugu)'},
-    {'name': 'Malayalam', 'native': 'മലയാളം (Malayalam)'},
-    {'name': 'Marathi', 'native': 'मराठी (Marathi)'},
-    {'name': 'Gujarati', 'native': 'ગુજરાતી (Gujarati)'},
-    {'name': 'Punjabi', 'native': 'ਪੰਜਾਬੀ (Punjabi)'},
+  final List<String> languages = const [
+    'English (Global)',
+    'हिन्दी (Hindi - National)',
+    'বাংলা (Bengali - West Bengal / Nadia)',
+    'தமிழ் (Tamil)',
+    'తెలుగు (Telugu)',
+    'മലയാളം (Malayalam)',
+    'मराठी (Marathi)',
+    'ગુજરાતી (Gujarati)',
+    'ਪੰਜਾਬੀ (Punjabi)',
   ];
 
   @override
@@ -55,7 +54,7 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
         title: const Text('Repair Fabricator - Select Language', style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16)),
         backgroundColor: const Color(0xFF131B2E),
       ),
-      body: Padding(
+            body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,9 +66,8 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
             const SizedBox(height: 15),
             Expanded(
               child: ListView.builder(
-                itemCount: officialLanguages.length,
+                itemCount: languages.length,
                 itemBuilder: (context, index) {
-                  final lang = officialLanguages[index];
                   return Card(
                     color: const Color(0xFF131B2E),
                     margin: const EdgeInsets.symmetric(vertical: 6),
@@ -78,8 +76,7 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
                       side: const BorderSide(color: Color(0xFF00E5FF), width: 0.5),
                     ),
                     child: ListTile(
-                      title: Text(lang['native']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text('Select ${lang['name']}', style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                      title: Text(languages[index], style: const TextStyle(fontWeight: FontWeight.bold)),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Color(0xFF00E5FF)),
                       onTap: () {
                         Navigator.push(
@@ -98,7 +95,6 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
 // ---------------------------------------------------------------------
@@ -124,8 +120,7 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
       MaterialPageRoute(builder: (context) => const SecureOnboardingScreen()),
     );
   }
-
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -199,7 +194,6 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 3. SECURE ONBOARDING SCREEN
 // ---------------------------------------------------------------------
@@ -313,7 +307,6 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN
 // ---------------------------------------------------------------------
@@ -333,7 +326,6 @@ class _StructuralProjectInputScreenState extends State<StructuralProjectInputScr
 
   @override
   Widget build(BuildContext context) {
-    end:
     return Scaffold(
       appBar: AppBar(title: const Text('Project & Camera Verification', style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16)), backgroundColor: const Color(0xFF131B2E)),
       body: Padding(
