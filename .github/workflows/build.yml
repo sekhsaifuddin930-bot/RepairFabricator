@@ -34,7 +34,7 @@ jobs:
     - name: Clean Android and Recreate V2 Embedding
       run: |
         rm -rf android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
-        flutter create . --platforms=android --org com.repair.fabricator
+        flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
     - name: Build APK Release
       run: flutter build apk --release
