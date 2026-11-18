@@ -30,6 +30,19 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
+      - name: Ensure Correct MainActivity Path
+        run: |
+          mkdir -p android/app/src/main/java/com/repair/fabricator
+          cat << 'EOF' > android/app/src/main/java/com/repair/fabricator/MainActivity.java
+          package com.repair.fabricator;
+
+          import io.flutter.embedding.android.FlutterActivity;
+
+          public class MainActivity extends FlutterActivity {
+          }
+          EOF
+          echo "MainActivity successfully created at correct path"
+
       - name: Write Perfect build.gradle with minSdkVersion 23
         run: |
           cat << 'EOF' > android/app/build.gradle
