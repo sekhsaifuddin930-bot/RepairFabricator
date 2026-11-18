@@ -28,6 +28,7 @@ class RepairFabricatorEnterpriseApp extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 1. ALL-INDIA MULTI-LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
@@ -96,6 +97,7 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
 // ---------------------------------------------------------------------
@@ -273,6 +275,7 @@ class _SecureOnboardingScreenState extends State<SecureOnboardingScreen> {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 4. ROLE SELECTION & MAIN DASHBOARD
 // ---------------------------------------------------------------------
@@ -311,7 +314,7 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------
-// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN
+// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN (Part A: Input)
 // ---------------------------------------------------------------------
 class StructuralProjectInputScreen extends StatefulWidget {
   const StructuralProjectInputScreen({Key? key}) : super(key: key);
@@ -348,6 +351,10 @@ class _StructuralProjectInputScreenState extends State<StructuralProjectInputScr
               ),
             ),
             const SizedBox(height: 20),
+
+            // ---------------------------------------------------------------------
+// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN (Part B: Camera UI)
+// ---------------------------------------------------------------------
             ElevatedButton.icon(
               onPressed: () {
                 setState(() {
