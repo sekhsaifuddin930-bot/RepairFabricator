@@ -29,27 +29,25 @@ jobs:
     - name: Get Dependencies
       run: flutter pub get
 
-    - name: Recreate Android V2 Embedding & Clean Structure
+    - name: Recreate Android V2 Embedding
       run: |
         rm -rf android
         flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
-    - name: Force MinSdkVersion to 23 in Gradle File
+    - name: Force MinSdkVersion to 23 (After Recreation)
       run: |
         BUILD_GRADLE="android/app/build.gradle"
         if [ -f "$BUILD_GRADLE" ]; then
           sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/g' "$BUILD_GRADLE"
           sed -i 's/minSdkVersion 21/minSdkVersion 23/g' "$BUILD_GRADLE"
-          echo "Successfully updated minSdkVersion to 23"
+          echo "minSdkVersion successfully forced to 23"
         else
-          echo "build.gradle not found!"
+          echo "Error: build.gradle not found!"
+          exit 1
         fi
 
-    - name: Clean & Build APK Release
-      run: |
-        flutter clean
-        flutter pub get
-        flutter build apk --release
+    - name: Build APK Release
+      run: flutter build apk --release --no-pub
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
