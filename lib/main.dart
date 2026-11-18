@@ -333,6 +333,7 @@ class _StructuralProjectInputScreenState extends State<StructuralProjectInputScr
 
   @override
   Widget build(BuildContext context) {
+    end:
     return Scaffold(
       appBar: AppBar(title: const Text('Project & Camera Verification', style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16)), backgroundColor: const Color(0xFF131B2E)),
       body: Padding(
