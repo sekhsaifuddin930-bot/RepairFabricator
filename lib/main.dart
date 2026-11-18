@@ -314,7 +314,7 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------
-// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN (Part A: Input)
+// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN
 // ---------------------------------------------------------------------
 class StructuralProjectInputScreen extends StatefulWidget {
   const StructuralProjectInputScreen({Key? key}) : super(key: key);
@@ -351,10 +351,6 @@ class _StructuralProjectInputScreenState extends State<StructuralProjectInputScr
               ),
             ),
             const SizedBox(height: 20),
-
-            // ---------------------------------------------------------------------
-// 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN (Part B: Camera UI)
-// ---------------------------------------------------------------------
             ElevatedButton.icon(
               onPressed: () {
                 setState(() {
