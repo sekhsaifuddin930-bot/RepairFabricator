@@ -72,7 +72,12 @@ jobs:
               source '../..'
           }
           EOF
-          echo "Successfully wrote custom build.gradle with minSdkVersion 23"
+          
+          # Fix version properties for Gradle compatibility
+          sed -i 's/versionCode flutterVersionCode.toInteger()/versionCode localProperties.getProperty("flutter.versionCode", "1").toInteger()/g' android/app/build.gradle
+          sed -i 's/versionName flutterVersionName/versionName localProperties.getProperty("flutter.versionName", "1.0")/' android/app/build.gradle
+          
+          echo "Successfully configured build.gradle"
 
       - name: Install dependencies
         run: flutter pub get
