@@ -34,6 +34,11 @@ jobs:
         rm -rf android
         flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
+    - name: Update MinSdkVersion to 23 for Firebase
+      run: |
+        sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 23/g' android/app/build.gradle
+        sed -i 's/minSdkVersion 21/minSdkVersion 23/g' android/app/build.gradle
+
     - name: Clean Build Cache & Build APK Release
       run: |
         flutter clean
