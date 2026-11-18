@@ -1,6 +1,7 @@
 // =====================================================================
 // REPAIR FABRICATOR: ALL-INDIA MUTUAL ENTERPRISE PRO APPLICATION
 // DIRECTOR & FOUNDER: Saifuddin Sekh
+// PACKAGE NAME: com.repair.fabricator
 // =====================================================================
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
