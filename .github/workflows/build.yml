@@ -30,26 +30,49 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --org com.repair.fabricator --project-name repair_fabricator
 
-      - name: Force MinSdkVersion to 23 correctly via Python
+      - name: Write Correct build.gradle with minSdkVersion 23
         run: |
-          python3 -c '
-          path = "android/app/build.gradle"
-          with open(path, "r") as f:
-              content = f.read()
-          
-          # Replace inside defaultConfig block safely
-          if "minSdkVersion" in content:
-              import re
-              # Replace any existing minSdkVersion line with 23
-              new_content = re.sub(r"minSdkVersion\s+.*", "minSdkVersion 23", content)
-          else:
-              # Inject inside defaultConfig if missing
-              new_content = content.replace("defaultConfig {", "defaultConfig {\n        minSdkVersion 23")
-              
-          with open(path, "w") as f:
-              f.write(new_content)
-          print("Successfully updated minSdkVersion to 23 inside defaultConfig")
-          '
+          cat << 'EOF' > android/app/build.gradle
+          plugins {
+              id "com.android.application"
+              id "kotlin-android"
+              id "dev.flutter.flutter-gradle-plugin"
+          }
+
+          android {
+              namespace "com.repair.fabricator"
+              compileSdkVersion flutter.compileSdkVersion
+              ndkVersion flutter.ndkVersion
+
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_1_8
+                  targetCompatibility JavaVersion.VERSION_1_8
+              }
+
+              kotlinOptions {
+                  jvmTarget = '1.8'
+              }
+
+              defaultConfig {
+                  applicationId "com.repair.fabricator"
+                  minSdkVersion 23
+                  targetSdkVersion flutter.targetSdkVersion
+                  versionCode flutterVersionCode.toInteger()
+                  versionName flutterVersionName
+              }
+
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.debug
+                  }
+              }
+          }
+
+          flutter {
+              source '../..'
+          }
+          EOF
+          echo "Successfully wrote custom build.gradle with minSdkVersion 23"
 
       - name: Install dependencies
         run: flutter pub get
