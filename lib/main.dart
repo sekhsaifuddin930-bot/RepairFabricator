@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   try {
     await Firebase.initializeApp();
   } catch (e) {
@@ -35,7 +35,6 @@ class RepairFabricatorEnterpriseApp extends StatelessWidget {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 1. ALL-INDIA MULTI-LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
@@ -102,7 +101,6 @@ class AllIndiaLanguageSelectionScreen extends StatelessWidget {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
 // ---------------------------------------------------------------------
@@ -280,7 +278,6 @@ class _SecureOnboardingScreenState extends State<SecureOnboardingScreen> {
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 4. ROLE SELECTION & MAIN DASHBOARD
 // ---------------------------------------------------------------------
@@ -320,7 +317,7 @@ class EcosystemRoleSelectionScreen extends StatelessWidget {
 
 // ---------------------------------------------------------------------
 // 5. LARGE STRUCTURAL PROJECT INPUT & CAMERA UPLOAD SCREEN
--- ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 class StructuralProjectInputScreen extends StatefulWidget {
   const StructuralProjectInputScreen({Key? key}) : super(key: key);
 
