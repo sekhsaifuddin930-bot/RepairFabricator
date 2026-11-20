@@ -2,23 +2,23 @@
   "project_info": {
     "project_number": "132552872909",
     "project_id": "repair-fabricator-308a2",
-    "storage_bucket": "repair-fabricator-308a2.appspot.com"
+    "storage_bucket": "repair-fabricator-308a2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132552872909:android:e980e13a910e3d382eea84",
+        "mobilesdk_app_id": "1:132552872909:android:e900e13a910e3d382eea84",
         "android_client_info": {
           "package_name": "com.repair.fabricator"
         }
       },
       "oauth_client": [
         {
-          "client_id": "132552872909-jvjtoc4dujefmtg69jdbm26nq4hm09fu.apps.googleusercontent.com",
+          "client_id": "132552872909-ma3lng8flair5tkcng6k886jlp4s2hup6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.repair.fabricator",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f384abf1ed"
+            "certificate_hash": "164f2ee7748d10d877c3bcc870be69f565c20b5c"
           }
         },
         {
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDzEHksZGyfXSx7_G-MRyXFhCFXZhrPC4"
+          "current_key": "AIzaSyDzEHks2GyFXSx7_KG-WRyXFhCFXZhrPC4"
         }
       ],
       "services": {
