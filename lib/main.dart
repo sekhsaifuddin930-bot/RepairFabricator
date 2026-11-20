@@ -69,6 +69,7 @@ class FullScreenFrame extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 1. ALL-INDIA LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
@@ -192,8 +193,7 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  @overrideWidget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -280,6 +280,7 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 3. STRICT NAME + MOBILE + FIREBASE OTP GATE (NO BYPASS ALLOWED)
 // ---------------------------------------------------------------------
@@ -344,7 +345,7 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
             if (!mounted) return;
             setState(() => _isLoading = false);
             _showMsg('Auto-verification failed: $e');
-          }
+            }
         },
         verificationFailed: (FirebaseAuthException e) {
           if (!mounted) return;
@@ -425,9 +426,7 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
         ),
       ),
     );
-  }
-
-  @override
+  }override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
@@ -562,6 +561,7 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
     );
   }
 }
+
 // ---------------------------------------------------------------------
 // 4. PASSCODE SETUP & LOCK SCREEN
 // ---------------------------------------------------------------------
@@ -705,7 +705,6 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
     );
   }
 }
-
 // ---------------------------------------------------------------------
 // 5. REPAIR FABRICATOR DASHBOARD SCREEN
 // ---------------------------------------------------------------------
