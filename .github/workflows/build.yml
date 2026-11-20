@@ -103,6 +103,7 @@ jobs:
               id "com.android.application"
               id "kotlin-android"
               id "dev.flutter.flutter-gradle-plugin"
+              id "com.google.gms.google-services"
           }
 
           android {
@@ -139,6 +140,11 @@ jobs:
           }
           EOF
           echo "Successfully wrote clean build.gradle"
+
+      - name: Print Android SHA-1 and SHA-256
+        run: |
+          cd android
+          ./gradlew signingReport
 
       - name: Install dependencies
         run: flutter pub get
