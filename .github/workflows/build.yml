@@ -50,7 +50,7 @@ jobs:
             "project_info": {
               "project_number": "132552872909",
               "project_id": "repair-fabricator-308a2",
-              "storage_bucket": "repair-fabricator-308a2.appspot.com"
+              "storage_bucket": "repair-fabricator-308a2.firebasestorage.app"
             },
             "client": [
               {
@@ -62,11 +62,11 @@ jobs:
                 },
                 "oauth_client": [
                   {
-                    "client_id": "132552872909-jvjtoc4dujefmtg69jdbm26nq4hm09fu.apps.googleusercontent.com",
+                    "client_id": "132552872909-a2en5mpke53mglkcs263n77g1eik7vu0.apps.googleusercontent.com",
                     "client_type": 1,
                     "android_info": {
                       "package_name": "com.repair.fabricator",
-                      "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f384abf1ed"
+                      "certificate_hash": "516976dfb3db65100786d63d09e541005ea37e83"
                     }
                   },
                   {
