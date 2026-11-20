@@ -156,6 +156,13 @@ jobs:
               print("settings.gradle checked")
           '
 
+      - name: Generate Debug Keystore if Missing
+        run: |
+          mkdir -p ~/.android
+          if [ ! -f ~/.android/debug.keystore ]; then
+            keytool -genkeypair -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
       - name: Print Android SHA-1 and SHA-256
         run: |
           cd android
