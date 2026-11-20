@@ -2,7 +2,6 @@
 // REPAIR FABRICATOR: LOCKED OTP, PASSCODE & SMART ECOSYSTEM
 // DIRECTOR & FOUNDER: Saifuddin Sekh
 // PACKAGE NAME: com.repair.fabricator
-// PART 1 OF 7
 // =====================================================================
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,7 +70,7 @@ class FullScreenFrame extends StatelessWidget {
   }
 }
 // ---------------------------------------------------------------------
-// PART 2 OF 7: ALL-INDIA LANGUAGE SELECTION SCREEN
+// 1. ALL-INDIA LANGUAGE SELECTION SCREEN
 // ---------------------------------------------------------------------
 class AllIndiaLanguageScreen extends StatelessWidget {
   const AllIndiaLanguageScreen({Key? key}) : super(key: key);
@@ -156,8 +155,9 @@ class AllIndiaLanguageScreen extends StatelessWidget {
     );
   }
 }
+
 // ---------------------------------------------------------------------
-// PART 3 OF 7: MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
+// 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
 // ---------------------------------------------------------------------
 class MandatoryLegalAgreementScreen extends StatefulWidget {
   final String selectedLanguage;
@@ -281,7 +281,7 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
   }
 }
 // ---------------------------------------------------------------------
-// PART 4 OF 7: STRICT NAME + MOBILE + FIREBASE OTP GATE
+// 3. STRICT NAME + MOBILE + FIREBASE OTP GATE (NO BYPASS ALLOWED)
 // ---------------------------------------------------------------------
 class StrictOtpGateScreen extends StatefulWidget {
   final String selectedLanguage;
@@ -563,7 +563,7 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
   }
 }
 // ---------------------------------------------------------------------
-// PART 5 OF 7: 4-DIGIT PASSCODE SETUP & LOCK SCREEN
+// 4. PASSCODE SETUP & LOCK SCREEN
 // ---------------------------------------------------------------------
 class PasscodeSetupAndLockScreen extends StatefulWidget {
   final String userName;
@@ -583,50 +583,42 @@ class PasscodeSetupAndLockScreen extends StatefulWidget {
 
 class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen> {
   final TextEditingController _pinController = TextEditingController();
-  String? _savedPasscode;
-  bool _isLockMode = false;
+  final TextEditingController _confirmPinController = TextEditingController();
 
-  void _showMsg(String msg) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
-  }
-
-  void _handlePasscodeAction() {
+  void _savePasscodeAndEnter() {
     final pin = _pinController.text.trim();
+    final confirmPin = _confirmPinController.text.trim();
+
     if (pin.length < 4) {
-      _showMsg('Enter a 4-digit passcode.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Set at least a 4-digit passcode.')),
+      );
       return;
     }
 
-    if (!_isLockMode) {
-      setState(() {
-        _savedPasscode = pin;
-        _isLockMode = true;
-        _pinController.clear();
-      });
-      _showMsg('4-digit passcode set! Enter it to open the workspace.');
-    } else {
-      if (pin == _savedPasscode) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => FourRoleDashboardScreen(
-              userName: widget.userName,
-              userPhone: widget.userPhone,
-              selectedLanguage: widget.selectedLanguage,
-              savedPasscode: _savedPasscode!,
-            ),
-          ),
-        );
-      } else {
-        _showMsg('Wrong passcode! Try again.');
-      }
+    if (pin != confirmPin) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passcodes do not match!')),
+      );
+      return;
     }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => RepairFabricatorDashboardScreen(
+          userName: widget.userName,
+          userPhone: widget.userPhone,
+          selectedLanguage: widget.selectedLanguage,
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
     _pinController.dispose();
+    _confirmPinController.dispose();
     super.dispose();
   }
 
@@ -634,9 +626,9 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _isLockMode ? 'ENTER PASSCODE' : 'SET APP PASSCODE',
-          style: const TextStyle(color: Color(0xFF00E5FF), fontSize: 16, fontWeight: FontWeight.bold),
+        title: const Text(
+          'SET APP PASSCODE',
+          style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF131B2E),
         centerTitle: true,
@@ -648,35 +640,42 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 16),
-              const Icon(Icons.password, size: 52, color: Colors.amberAccent),
+              const Icon(Icons.pin, size: 54, color: Color(0xFF00E5FF)),
               const SizedBox(height: 12),
               Text(
-                _isLockMode ? 'PASSCODE LOCK ACTIVE' : 'CREATE 4-DIGIT PASSCODE',
+                'Welcome, ${widget.userName}!',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF00E5FF),
-                ),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Text(
-                _isLockMode
-                    ? 'Enter your passcode to unlock for ${widget.userName}'
-                    : 'Set a 4-digit PIN to protect your account and workspace',
+                'Verified: ${widget.userPhone} • ${widget.selectedLanguage}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12, color: Colors.white70),
+                style: const TextStyle(fontSize: 12, color: Colors.amberAccent),
               ),
               const SizedBox(height: 24),
               TextField(
                 controller: _pinController,
                 keyboardType: TextInputType.number,
                 obscureText: true,
-                maxLength: 4,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 22, letterSpacing: 10, fontWeight: FontWeight.bold),
+                maxLength: 6,
                 decoration: InputDecoration(
-                  labelText: '4-Digit Passcode',
+                  labelText: 'Create 4–6 Digit Passcode',
+                  prefixIcon: const Icon(Icons.lock, color: Color(0xFF00E5FF)),
+                  filled: true,
+                  fillColor: const Color(0xFF131B2E),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: _confirmPinController,
+                keyboardType: TextInputType.number,
+                obscureText: true,
+                maxLength: 6,
+                decoration: InputDecoration(
+                  labelText: 'Confirm Passcode',
+                  prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF00E5FF)),
                   filled: true,
                   fillColor: const Color(0xFF131B2E),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -684,15 +683,15 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _handlePasscodeAction,
+                onPressed: _savePasscodeAndEnter,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF00E5FF),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: Text(
-                  _isLockMode ? 'UNLOCK WORKSPACE ➔' : 'SAVE PASSCODE ➔',
-                  style: const TextStyle(
+                child: const Text(
+                  'SAVE & ENTER ECOSYSTEM ➔',
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -706,585 +705,83 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
     );
   }
 }
+
 // ---------------------------------------------------------------------
-// PART 6 OF 7: 4-ROLE DASHBOARD & QUICK PASSCODE UNLOCK
+// 5. REPAIR FABRICATOR DASHBOARD SCREEN
 // ---------------------------------------------------------------------
-class FourRoleDashboardScreen extends StatelessWidget {
+class RepairFabricatorDashboardScreen extends StatelessWidget {
   final String userName;
   final String userPhone;
   final String selectedLanguage;
-  final String savedPasscode;
 
-  const FourRoleDashboardScreen({
+  const RepairFabricatorDashboardScreen({
     Key? key,
     required this.userName,
     required this.userPhone,
     required this.selectedLanguage,
-    required this.savedPasscode,
   }) : super(key: key);
-
-  final List<_RoleProfileItem> _roles = const [
-    _RoleProfileItem(
-      title: 'Welder',
-      subtitle: 'Welding & Repair',
-      icon: Icons.bolt,
-      accent: Colors.amberAccent,
-      emotionNote:
-          'Every spark and every drop of sweat carries real skill and pride. Connect directly with genuine repair and fabrication work.',
-      highlights: ['Live Job Requests', 'Earnings & Status', 'Repair & Grill Work'],
-    ),
-    _RoleProfileItem(
-      title: 'Contractor',
-      subtitle: 'Site & Structure',
-      icon: Icons.engineering,
-      accent: Color(0xFF00E5FF),
-      emotionNote:
-          'Big projects mean strong teams, clear planning, and commitment on site. Manage structural work and estimates with confidence.',
-      highlights: ['Project Overview', 'Team & Site Tracking', 'Structural Estimation'],
-    ),
-    _RoleProfileItem(
-      title: 'Shop Owner',
-      subtitle: 'Workshop & Store',
-      icon: Icons.storefront,
-      accent: Colors.greenAccent,
-      emotionNote:
-          'Keep your inventory and materials moving to the right hands every day. Grow your workshop and supply reach smoothly.',
-      highlights: ['Gates & Grilles', 'Raw Materials Supply', 'Instant Order Flow'],
-    ),
-    _RoleProfileItem(
-      title: 'All Service',
-      subtitle: 'Full Fabrication',
-      icon: Icons.miscellaneous_services,
-      accent: Colors.orangeAccent,
-      emotionNote:
-          'From quick home repairs to large structural builds, get transparent weight estimates, photo proof, and fast confirmation.',
-      highlights: ['Small Repair (INR 300+)', 'Large Structure Weight', 'Photo & Deal Confirm'],
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final int crossAxisCount = width >= 650 ? 4 : 2;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'SELECT CATEGORY',
+          'Repair Fabricator Ecosystem',
           style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF131B2E),
         actions: [
           IconButton(
-            tooltip: 'Lock Passcode',
-            icon: const Icon(Icons.lock, color: Colors.amberAccent),
-            onPressed: () {
-              Navigator.pushReplacement(
+            icon: const Icon(Icons.logout, color: Color(0xFF00E5FF)),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              if (!context.mounted) return;
+              Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => _QuickPasscodeUnlockScreen(
-                    userName: userName,
-                    userPhone: userPhone,
-                    selectedLanguage: selectedLanguage,
-                    expectedPasscode: savedPasscode,
-                  ),
-                ),
+                MaterialPageRoute(builder: (_) => const AllIndiaLanguageScreen()),
+                (route) => false,
               );
             },
           ),
         ],
       ),
       body: FullScreenFrame(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF131B2E),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFF00E5FF), width: 0.7),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.verified, color: Colors.greenAccent, size: 22),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        '$userName  •  $userPhone',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 18),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _roles.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.02,
-                ),
-                itemBuilder: (context, index) {
-                  final item = _roles[index];
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(14),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => RoleProfileWorkScreen(
-                            roleItem: item,
-                            userName: userName,
-                            userPhone: userPhone,
-                            selectedLanguage: selectedLanguage,
-                            savedPasscode: savedPasscode,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF131B2E),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: item.accent.withOpacity(0.8), width: 1.2),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: item.accent.withOpacity(0.15),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(item.icon, size: 28, color: item.accent),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            item.title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            item.subtitle,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 11, color: Colors.white70),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _QuickPasscodeUnlockScreen extends StatefulWidget {
-  final String userName;
-  final String userPhone;
-  final String selectedLanguage;
-  final String expectedPasscode;
-
-  const _QuickPasscodeUnlockScreen({
-    Key? key,
-    required this.userName,
-    required this.userPhone,
-    required this.selectedLanguage,
-    required this.expectedPasscode,
-  }) : super(key: key);
-
-  @override
-  State<_QuickPasscodeUnlockScreen> createState() => _QuickPasscodeUnlockScreenState();
-}
-
-class _QuickPasscodeUnlockScreenState extends State<_QuickPasscodeUnlockScreen> {
-  final TextEditingController _unlockController = TextEditingController();
-
-  void _unlock() {
-    if (_unlockController.text.trim() == widget.expectedPasscode) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => FourRoleDashboardScreen(
-            userName: widget.userName,
-            userPhone: widget.userPhone,
-            selectedLanguage: widget.selectedLanguage,
-            savedPasscode: widget.expectedPasscode,
-          ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Incorrect passcode!')),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _unlockController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('LOCKED', style: TextStyle(color: Color(0xFF00E5FF), fontSize: 16)),
-        backgroundColor: const Color(0xFF131B2E),
-      ),
-      body: FullScreenFrame(
-        child: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 24),
-              const Icon(Icons.lock, size: 54, color: Colors.amberAccent),
-              const SizedBox(height: 14),
-              const Text(
-                'ENTER PASSCODE TO CONTINUE',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _unlockController,
-                keyboardType: TextInputType.number,
-                obscureText: true,
-                maxLength: 4,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  labelText: '4-Digit Passcode',
-                  filled: true,
-                  fillColor: const Color(0xFF131B2E),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _unlock,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00E5FF),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: const Text(
-                  'UNLOCK ➔',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _RoleProfileItem {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color accent;
-  final String emotionNote;
-  final List<String> highlights;
-
-  const _RoleProfileItem({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.accent,
-    required this.emotionNote,
-    required this.highlights,
-  });
-}
-// ---------------------------------------------------------------------
-// PART 7 OF 7: ROLE PROFILE, INTELLIGENT ESTIMATOR & CONFIRMATION
-// ---------------------------------------------------------------------
-class RoleProfileWorkScreen extends StatefulWidget {
-  final _RoleProfileItem roleItem;
-  final String userName;
-  final String userPhone;
-  final String selectedLanguage;
-  final String savedPasscode;
-
-  const RoleProfileWorkScreen({
-    Key? key,
-    required this.roleItem,
-    required this.userName,
-    required this.userPhone,
-    required this.selectedLanguage,
-    required this.savedPasscode,
-  }) : super(key: key);
-
-  @override
-  State<RoleProfileWorkScreen> createState() => _RoleProfileWorkScreenState();
-}
-
-class _RoleProfileWorkScreenState extends State<RoleProfileWorkScreen> {
-  final TextEditingController _lengthController = TextEditingController(text: '10');
-  final TextEditingController _heightController = TextEditingController(text: '8');
-  final TextEditingController _budgetController = TextEditingController(text: '600');
-  final TextEditingController _detailsController = TextEditingController();
-
-  bool _photoAttached = false;
-  double _areaSqFt = 0;
-  double _estWeight = 0;
-  double _ratePerKg = 0;
-  String _smartAdvice = '';
-
-  void _recalculateSmart() {
-    final l = double.tryParse(_lengthController.text.trim()) ?? 0;
-    final h = double.tryParse(_heightController.text.trim()) ?? 0;
-    final budget = double.tryParse(_budgetController.text.trim()) ?? 0;
-
-    final area = l * h;
-    final weight = area * 0.45;
-    final rate = weight > 0 ? (budget / weight) : 0;
-
-    String advice;
-    if (weight <= 35 || budget <= 1000) {
-      advice = 'Smart Tip: Fits quick repair/small grill scope; clear photo speeds up offers.';
-    } else if (weight <= 250) {
-      advice = 'Smart Tip: Medium fabrication batch; confirm material gauge & welding rod spec.';
-    } else {
-      advice = 'Smart Tip: Heavy structural scale; split milestones & verify site access early.';
-    }
-
-    setState(() {
-      _areaSqFt = area;
-      _estWeight = weight;
-      _ratePerKg = rate.toDouble();
-      _smartAdvice = advice;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _recalculateSmart();
-  }
-
-  @override
-  void dispose() {
-    _lengthController.dispose();
-    _heightController.dispose();
-    _budgetController.dispose();
-    _detailsController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final role = widget.roleItem;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${role.title.toUpperCase()} PROFILE',
-          style: TextStyle(color: role.accent, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: const Color(0xFF131B2E),
-      ),
-      body: FullScreenFrame(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF131B2E),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: role.accent.withOpacity(0.8), width: 1.2),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: role.accent.withOpacity(0.18),
-                          child: Icon(role.icon, color: role.accent),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.userName,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${role.title} • ${widget.userPhone}',
-                                style: TextStyle(fontSize: 12, color: role.accent),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      role.emotionNote,
-                      style: const TextStyle(fontSize: 13, color: Colors.white70, height: 1.45),
-                    ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: role.highlights
-                          .map(
-                            (tag) => Chip(
-                              label: Text(tag, style: const TextStyle(fontSize: 11)),
-                              backgroundColor: const Color(0xFF0A0F1D),
-                              side: BorderSide(color: role.accent.withOpacity(0.5)),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 18),
-              TextField(
-                controller: _lengthController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) => _recalculateSmart(),
-                decoration: InputDecoration(
-                  labelText: 'Length (ft)',
-                  filled: true,
-                  fillColor: const Color(0xFF131B2E),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _heightController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) => _recalculateSmart(),
-                decoration: InputDecoration(
-                  labelText: 'Height (ft)',
-                  filled: true,
-                  fillColor: const Color(0xFF131B2E),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _budgetController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) => _recalculateSmart(),
-                decoration: InputDecoration(
-                  labelText: 'Budget / Rate (INR)',
-                  filled: true,
-                  fillColor: const Color(0xFF131B2E),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _detailsController,
-                decoration: InputDecoration(
-                  labelText: 'Project / Work Details',
-                  filled: true,
-                  fillColor: const Color(0xFF131B2E),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              ),
-              const SizedBox(height: 14),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF131B2E),
+              Card(
+                color: const Color(0xFF131B2E),
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFF00E5FF)),
+                  side: const BorderSide(color: Color(0xFF00E5FF), width: 0.8),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Estimated Weight: ${_estWeight.toStringAsFixed(1)} kg  •  Area: ${_areaSqFt.toStringAsFixed(0)} sq.ft',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF00E5FF),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Director / Member: $userName',
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Implied Budget Rate: INR ${_ratePerKg.toStringAsFixed(1)} / kg',
-                      style: const TextStyle(fontSize: 12, color: Colors.amberAccent),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      _smartAdvice,
-                      style: const TextStyle(fontSize: 12, color: Colors.white70),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              ElevatedButton.icon(
-                onPressed: () {
-                  setState(() => _photoAttached = true);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Photo attached successfully!')),
-                  );
-                },
-                icon: Icon(
-                  _photoAttached ? Icons.check_circle : Icons.camera_alt,
-                  color: _photoAttached ? Colors.greenAccent : Colors.white,
-                ),
-                label: Text(_photoAttached ? 'Photo Attached (1)' : 'Attach Work / Damage Photo'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _photoAttached ? Colors.green.shade900 : const Color(0xFF131B2E),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  side: BorderSide(
-                    color: _photoAttached ? Colors.greenAccent : const Color(0xFF00E5FF),
+                      const SizedBox(height: 6),
+                      Text('Mobile: $userPhone', style: const TextStyle(color: Colors.white70)),
+                      const SizedBox(height: 4),
+                      Text('Language: $selectedLanguage', style: const TextStyle(color: Colors.amberAccent)),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
-              ElevatedButton(
-                onPressed: () {
-                  final budget = _budgetController.text.trim();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        '${role.title} confirmed for ${widget.userName} • ${_estWeight.toStringAsFixed(1)} kg • INR $budget',
-                      ),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00E5FF),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text(
-                  'CONFIRM & SUBMIT',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+              const SizedBox(height: 20),
+              const Expanded(
+                child: Center(
+                  child: Text(
+                    'Welding, Fabrication & Repair Service Marketplace Ready.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, color: Colors.white70),
+                  ),
                 ),
               ),
             ],
