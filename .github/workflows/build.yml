@@ -95,7 +95,8 @@ jobs:
           }
           EOF
           echo "google-services.json successfully created"
-                - name: Write Perfect build.gradle with minSdkVersion 23
+
+      - name: Write Perfect build.gradle with minSdkVersion 23
         run: |
           cat << 'EOF' > android/app/build.gradle
           plugins {
