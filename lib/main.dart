@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// ---------------------------------------------------------------------
+// STEP 1: CORE INITIALIZATION, FIREBASE & RESPONSIVE FRAME
+// ---------------------------------------------------------------------
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +21,7 @@ void main() async {
 
   runApp(const RepairFabricatorFinalApp());
 }
+
 class RepairFabricatorFinalApp extends StatelessWidget {
   const RepairFabricatorFinalApp({Key? key}) : super(key: key);
 
@@ -36,6 +40,7 @@ class RepairFabricatorFinalApp extends StatelessWidget {
   }
 }
 
+/// Responsive frame for mobile, tablet, and large/TV screens
 class FullScreenFrame extends StatelessWidget {
   final Widget child;
   final double maxWidth;
@@ -67,10 +72,13 @@ class FullScreenFrame extends StatelessWidget {
     );
   }
 }
+// ---------------------------------------------------------------------
+// STEP 2: ALL-INDIA LANGUAGE SELECTION SCREEN
+// ---------------------------------------------------------------------
 class AllIndiaLanguageScreen extends StatelessWidget {
   const AllIndiaLanguageScreen({Key? key}) : super(key: key);
 
-  final List<String> languages = const [
+  final languages = const [
     'English (Global)',
     'Hindi (National)',
     'Bengali (West Bengal / Nadia)',
@@ -150,6 +158,9 @@ class AllIndiaLanguageScreen extends StatelessWidget {
     );
   }
 }
+// ---------------------------------------------------------------------
+// STEP 3: MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
+// ---------------------------------------------------------------------
 class MandatoryLegalAgreementScreen extends StatefulWidget {
   final String selectedLanguage;
 
@@ -271,6 +282,9 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 }
+// ---------------------------------------------------------------------
+// STEP 4: STRICT NAME + MOBILE + FIREBASE OTP GATE
+// ---------------------------------------------------------------------
 class StrictOtpGateScreen extends StatefulWidget {
   final String selectedLanguage;
 
@@ -414,7 +428,8 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
       ),
     );
   }
-    @override
+
+  @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
@@ -549,6 +564,9 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
     );
   }
 }
+// ---------------------------------------------------------------------
+// STEP 5: PASSCODE SETUP & LOCK SCREEN
+// ---------------------------------------------------------------------
 class PasscodeSetupAndLockScreen extends StatefulWidget {
   final String userName;
   final String userPhone;
@@ -689,8 +707,10 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
     );
   }
 }
-
-const List> kWeldingStages = [
+// ---------------------------------------------------------------------
+// STEP 6: 7-STAGE WELDING & FABRICATION WORKFLOW DATA
+// ---------------------------------------------------------------------
+const kWeldingStages = [
   {
     'step': '1. Job & Measurement',
     'desc': 'Grill, gate, shutter, railing & sheet-metal job specs and site measurements.',
@@ -720,7 +740,9 @@ const List> kWeldingStages = [
     'desc': 'Site handover, billing/commission & 1-month post-payment support.',
   },
 ];
-
+// ---------------------------------------------------------------------
+// STEP 7: REPAIR FABRICATOR DASHBOARD & LOGOUT
+// ---------------------------------------------------------------------
 class RepairFabricatorDashboardScreen extends StatelessWidget {
   final String userName;
   final String userPhone;
