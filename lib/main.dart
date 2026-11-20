@@ -18,7 +18,6 @@ void main() async {
 
   runApp(const RepairFabricatorFinalApp());
 }
-
 class RepairFabricatorFinalApp extends StatelessWidget {
   const RepairFabricatorFinalApp({Key? key}) : super(key: key);
 
@@ -37,7 +36,6 @@ class RepairFabricatorFinalApp extends StatelessWidget {
   }
 }
 
-/// Responsive frame for mobile, tablet, and large/TV screens
 class FullScreenFrame extends StatelessWidget {
   final Widget child;
   final double maxWidth;
@@ -69,10 +67,6 @@ class FullScreenFrame extends StatelessWidget {
     );
   }
 }
-
-// ---------------------------------------------------------------------
-// 1. ALL-INDIA LANGUAGE SELECTION SCREEN
-// ---------------------------------------------------------------------
 class AllIndiaLanguageScreen extends StatelessWidget {
   const AllIndiaLanguageScreen({Key? key}) : super(key: key);
 
@@ -156,10 +150,6 @@ class AllIndiaLanguageScreen extends StatelessWidget {
     );
   }
 }
-
-// ---------------------------------------------------------------------
-// 2. MANDATORY LEGAL ONBOARDING AGREEMENT SCREEN
-// ---------------------------------------------------------------------
 class MandatoryLegalAgreementScreen extends StatefulWidget {
   final String selectedLanguage;
 
@@ -193,7 +183,8 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 
-  @overrideWidget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -280,10 +271,6 @@ class _MandatoryLegalAgreementScreenState extends State<MandatoryLegalAgreementS
     );
   }
 }
-
-// ---------------------------------------------------------------------
-// 3. STRICT NAME + MOBILE + FIREBASE OTP GATE (NO BYPASS ALLOWED)
-// ---------------------------------------------------------------------
 class StrictOtpGateScreen extends StatefulWidget {
   final String selectedLanguage;
 
@@ -345,7 +332,7 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
             if (!mounted) return;
             setState(() => _isLoading = false);
             _showMsg('Auto-verification failed: $e');
-            }
+          }
         },
         verificationFailed: (FirebaseAuthException e) {
           if (!mounted) return;
@@ -426,7 +413,8 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
         ),
       ),
     );
-  }override
+  }
+    @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
@@ -561,10 +549,6 @@ class _StrictOtpGateScreenState extends State<StrictOtpGateScreen> {
     );
   }
 }
-
-// ---------------------------------------------------------------------
-// 4. PASSCODE SETUP & LOCK SCREEN
-// ---------------------------------------------------------------------
 class PasscodeSetupAndLockScreen extends StatefulWidget {
   final String userName;
   final String userPhone;
@@ -705,9 +689,38 @@ class _PasscodeSetupAndLockScreenState extends State<PasscodeSetupAndLockScreen>
     );
   }
 }
-// ---------------------------------------------------------------------
-// 5. REPAIR FABRICATOR DASHBOARD SCREEN
-// ---------------------------------------------------------------------
+
+const List> kWeldingStages = [
+  {
+    'step': '1. Job & Measurement',
+    'desc': 'Grill, gate, shutter, railing & sheet-metal job specs and site measurements.',
+  },
+  {
+    'step': '2. Materials & Rods',
+    'desc': 'MS/SS sheets, pipes, angles, welding electrodes, cutting & grinding discs.',
+  },
+  {
+    'step': '3. Machine Setup',
+    'desc': 'Current/ampere settings, earth clamp, cables & workshop/site readiness.',
+  },
+  {
+    'step': '4. Safety & PPE',
+    'desc': 'Welding shield/goggles, gloves, apron, safety boots & spark protection.',
+  },
+  {
+    'step': '5. Fitting & Welding',
+    'desc': 'Alignment, clamping, tack welding & main joint fabrication execution.',
+  },
+  {
+    'step': '6. Quality Control (QC)',
+    'desc': 'Weld bead, alignment, strength & surface finish inspection.',
+  },
+  {
+    'step': '7. Delivery, Billing & Support',
+    'desc': 'Site handover, billing/commission & 1-month post-payment support.',
+  },
+];
+
 class RepairFabricatorDashboardScreen extends StatelessWidget {
   final String userName;
   final String userPhone;
@@ -746,7 +759,7 @@ class RepairFabricatorDashboardScreen extends StatelessWidget {
       ),
       body: FullScreenFrame(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -757,30 +770,47 @@ class RepairFabricatorDashboardScreen extends StatelessWidget {
                   side: const BorderSide(color: Color(0xFF00E5FF), width: 0.8),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Director / Member: $userName',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
+                        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
                       ),
-                      const SizedBox(height: 6),
-                      Text('Mobile: $userPhone', style: const TextStyle(color: Colors.white70)),
                       const SizedBox(height: 4),
+                      Text('Mobile: $userPhone', style: const TextStyle(color: Colors.white70)),
+                      const SizedBox(height: 2),
                       Text('Language: $selectedLanguage', style: const TextStyle(color: Colors.amberAccent)),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              const Expanded(
-                child: Center(
-                  child: Text(
-                    'Welding, Fabrication & Repair Service Marketplace Ready.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 15, color: Colors.white70),
-                  ),
+              const SizedBox(height: 12),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: kWeldingStages.length,
+                  itemBuilder: (context, index) {
+                    final item = kWeldingStages[index];
+                    return Card(
+                      color: const Color(0xFF131B2E),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: const BorderSide(color: Color(0xFF00E5FF), width: 0.5),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          item['step']!,
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
+                        ),
+                        subtitle: Text(
+                          item['desc']!,
+                          style: const TextStyle(fontSize: 12.5, color: Colors.white70),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
