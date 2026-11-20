@@ -43,7 +43,7 @@ jobs:
           EOF
           echo "MainActivity successfully created at correct path"
 
-      - name: Create google-services.json
+                - name: Create google-services.json
         run: |
           cat << 'EOF' > android/app/google-services.json
           {
@@ -141,7 +141,22 @@ jobs:
           EOF
           echo "Successfully wrote clean build.gradle"
 
-      - name: Print Android SHA-1 and SHA-256
+      - name: Register Google Services Plugin in settings.gradle
+        run: |
+          python3 -c '
+          p = "android/settings.gradle"
+          s = open(p).read()
+          target = "id \"dev.flutter.flutter-plugin-loader\" version \"1.0.0\""
+          replacement = target + "\\n    id \"com.google.gms.google-services\" version \"4.4.2\" apply false"
+          if "com.google.gms.google-services" not in s and target in s:
+              s = s.replace(target, replacement, 1)
+              open(p, "w").write(s)
+              print("Added google-services plugin to settings.gradle")
+          else:
+              print("settings.gradle checked")
+          '
+
+                - name: Print Android SHA-1 and SHA-256
         run: |
           cd android
           ./gradlew signingReport
